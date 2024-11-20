@@ -1,0 +1,2 @@
+# static range minimum queries 
+

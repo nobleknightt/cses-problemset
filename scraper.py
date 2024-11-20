@@ -39,7 +39,17 @@ with open("tasks.csv", "w") as f:
             task_dir = category_dir / task_slug
             task_dir.mkdir(exist_ok=True)
 
-            (task_dir / "solution.py").touch(exist_ok=True)
+            task_file = task_dir / "task.md"
+            task_file.touch(exist_ok=True)
+
+            with task_file.open("w") as f:
+                f.write(f"# {title} \n\n")
+
+            solution_file = task_dir / "solution.py"
+            solution_file.touch(exist_ok=True)
+
+            with solution_file.open("w") as f:
+                f.write(f"# {title.lower()} \n\n")
 
             writer.writerow(
                 {

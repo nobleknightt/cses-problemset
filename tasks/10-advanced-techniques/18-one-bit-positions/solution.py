@@ -1,0 +1,2 @@
+# one bit positions 
+

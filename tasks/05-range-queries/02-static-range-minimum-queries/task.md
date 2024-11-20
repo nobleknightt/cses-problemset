@@ -1,0 +1,2 @@
+# Static Range Minimum Queries 
+
