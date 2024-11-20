@@ -225,7 +225,7 @@ path,cses_id,status
 11-additional-problems/01-shortest-subsequence,1087,unsolved
 11-additional-problems/02-counting-bits,1146,unsolved
 11-additional-problems/03-swap-game,1670,unsolved
-11-additional-problems/04-prüfer-code,1134,unsolved
+11-additional-problems/04-prufer-code,1134,unsolved
 11-additional-problems/05-acyclic-graph-edges,1756,unsolved
 11-additional-problems/06-strongly-connected-edges,2177,unsolved
 11-additional-problems/07-even-outdegree-edges,2179,unsolved
