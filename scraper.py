@@ -14,6 +14,7 @@ categories = [h2.inner_text() for h2 in h2_elements[1:]]
 
 with open("tasks.csv", "w") as f:
     writer = csv.DictWriter(f, fieldnames=["path", "cses_id", "status"])
+    writer.writeheader()
     for i, category in enumerate(categories, start=1):
         category_slug = f'{str(i).rjust(2, "0")}-{category.replace(" ", "-").lower()}'
         a_elements = page.query_selector_all(f'h2:has-text("{category}") + ul a')
