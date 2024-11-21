@@ -137,6 +137,35 @@ with tasks_csv.open() as f:
                         with image_file.open("wb") as f:
                             f.write(response.content)
 
+                examples_dir = (
+                    Path(__file__).parent / "tasks" / row["path"] / "examples"
+                )
+                examples_dir.mkdir(exist_ok=True)
+
+                for i, pre in enumerate(page.locator('h1[id^="example"] ~ pre').all()):
+                    example_dir = examples_dir / str(i // 2 + 1).rjust(2, "0")
+                    example_dir.mkdir(exist_ok=True)
+                    if i % 2 == 0:
+                        with (example_dir / "in").open("w") as f:
+                            f.write(
+                                pre.text_content()
+                                .strip()
+                                .removeprefix("```")
+                                .removesuffix("```")
+                                .strip()
+                            )
+                            f.write("\n")
+                    else:
+                        with (example_dir / "out").open("w") as f:
+                            f.write(
+                                pre.text_content()
+                                .strip()
+                                .removeprefix("```")
+                                .removesuffix("```")
+                                .strip()
+                            )
+                            f.write("\n")
+
                 tasks_md.write(page.locator(".md").text_content())
 
             except Exception as e:
