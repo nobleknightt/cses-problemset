@@ -1,8 +1,12 @@
 import csv
+import os
 from pathlib import Path
 
 import requests
+from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
+
+load_dotenv()
 
 playwright = sync_playwright().start()
 
@@ -170,6 +174,29 @@ with tasks_csv.open() as f:
 
             except Exception as e:
                 print(row, e)
+
+page.goto("https://cses.fi/problemset/")
+page.get_by_text("Login").click()
+page.fill('input[type="text"]', os.environ["CSES_USERNAME"])
+page.fill('input[type="password"]', os.environ["CSES_PASSWORD"])
+page.click('input[type="submit"]')
+
+tests_base_url = "https://cses.fi/problemset/tests"
+tasks_csv = Path(__file__).parent / "tasks.csv"
+
+with tasks_csv.open() as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        try:
+            page.goto(f"{tests_base_url}/{row['cses_id']}")
+            with page.expect_download() as download:
+                page.click('input[value="Download"]')
+            download.value.save_as(
+                Path(__file__).parent / "tasks" / row["path"] / "tests.zip"
+            )
+
+        except Exception as e:
+            print(row, e)
 
 browser.close()
 playwright.stop()
